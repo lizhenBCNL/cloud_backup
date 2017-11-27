@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.arkcloud.dao.BackupJobMapper" >
+  <resultMap id="BaseResultMap" type="com.arkcloud.pojo.BackupJob" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="started_at" property="startedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="finished_at" property="finishedAt" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="src_id" property="srcId" jdbcType="INTEGER" />
+    <result column="primary_dest_id" property="primaryDestId" jdbcType="INTEGER" />
+    <result column="secondary_dest_id" property="secondaryDestId" jdbcType="INTEGER" />
+    <result column="policy_id" property="policyId" jdbcType="INTEGER" />
+    <result column="objects_num" property="objectsNum" jdbcType="INTEGER" />
+    <result column="last_runtime" property="lastRuntime" jdbcType="TIMESTAMP" />
+    <result column="next_runtime" property="nextRuntime" jdbcType="TIMESTAMP" />
+    <result column="incr_last_runtime" property="incrLastRuntime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="exclude_swapfiles" property="excludeSwapfiles" jdbcType="BIT" />
+    <result column="enable_vmwaretools" property="enableVmwaretools" jdbcType="BIT" />
+    <result column="enabled_cbt" property="enabledCbt" jdbcType="BIT" />
+    <result column="enable_dedup" property="enableDedup" jdbcType="BIT" />
+    <result column="enable_app_awareness" property="enableAppAwareness" jdbcType="BIT" />
+    <result column="enable_encryption" property="enableEncryption" jdbcType="BIT" />
+    <result column="encryption_pwd" property="encryptionPwd" jdbcType="VARCHAR" />
+    <result column="compress_level" property="compressLevel" jdbcType="TINYINT" />
+    <result column="success_num" property="successNum" jdbcType="INTEGER" />
+    <result column="warning_num" property="warningNum" jdbcType="INTEGER" />
+    <result column="error_num" property="errorNum" jdbcType="INTEGER" />
+    <result column="ntf_contents" property="ntfContents" jdbcType="VARCHAR" />
+    <result column="ntf_type" property="ntfType" jdbcType="TINYINT" />
+    <result column="platform" property="platform" jdbcType="VARCHAR" />
+    <result column="tag" property="tag" jdbcType="VARCHAR" />
+    <result column="job_desc" property="jobDesc" jdbcType="VARCHAR" />
+    <result column="enable_incrbk" property="enableIncrbk" jdbcType="BIT" />
+    <result column="enable_diffbk" property="enableDiffbk" jdbcType="BIT" />
+    <result column="enable_retry" property="enableRetry" jdbcType="BIT" />
+    <result column="last_retry_time" property="lastRetryTime" jdbcType="TIMESTAMP" />
+    <result column="enable_backup_window" property="enableBackupWindow" jdbcType="BIT" />
+    <result column="enable_health_check" property="enableHealthCheck" jdbcType="BIT" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.arkcloud.pojo.BackupJobWithBLOBs" extends="BaseResultMap" >
+    <result column="snmp_notification" property="snmpNotification" jdbcType="LONGVARCHAR" />
+    <result column="emails" property="emails" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, created_at, started_at, updated_at, finished_at, type, src_id, primary_dest_id, 
+    secondary_dest_id, policy_id, objects_num, last_runtime, next_runtime, incr_last_runtime, 
+    status, exclude_swapfiles, enable_vmwaretools, enabled_cbt, enable_dedup, enable_app_awareness, 
+    enable_encryption, encryption_pwd, compress_level, success_num, warning_num, error_num, 
+    ntf_contents, ntf_type, platform, tag, job_desc, enable_incrbk, enable_diffbk, enable_retry, 
+    last_retry_time, enable_backup_window, enable_health_check
+  </sql>
+  <sql id="Blob_Column_List" >
+    snmp_notification, emails
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from backup_job
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from backup_job
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.arkcloud.pojo.BackupJobWithBLOBs" >
+    insert into backup_job (id, name, created_at, 
+      started_at, updated_at, finished_at, 
+      type, src_id, primary_dest_id, 
+      secondary_dest_id, policy_id, objects_num, 
+      last_runtime, next_runtime, incr_last_runtime, 
+      status, exclude_swapfiles, enable_vmwaretools, 
+      enabled_cbt, enable_dedup, enable_app_awareness, 
+      enable_encryption, encryption_pwd, compress_level, 
+      success_num, warning_num, error_num, 
+      ntf_contents, ntf_type, platform, 
+      tag, job_desc, enable_incrbk, 
+      enable_diffbk, enable_retry, last_retry_time, 
+      enable_backup_window, enable_health_check, snmp_notification, 
+      emails)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{startedAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{finishedAt,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=TINYINT}, #{srcId,jdbcType=INTEGER}, #{primaryDestId,jdbcType=INTEGER}, 
+      #{secondaryDestId,jdbcType=INTEGER}, #{policyId,jdbcType=INTEGER}, #{objectsNum,jdbcType=INTEGER}, 
+      #{lastRuntime,jdbcType=TIMESTAMP}, #{nextRuntime,jdbcType=TIMESTAMP}, #{incrLastRuntime,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=TINYINT}, #{excludeSwapfiles,jdbcType=BIT}, #{enableVmwaretools,jdbcType=BIT}, 
+      #{enabledCbt,jdbcType=BIT}, #{enableDedup,jdbcType=BIT}, #{enableAppAwareness,jdbcType=BIT}, 
+      #{enableEncryption,jdbcType=BIT}, #{encryptionPwd,jdbcType=VARCHAR}, #{compressLevel,jdbcType=TINYINT}, 
+      #{successNum,jdbcType=INTEGER}, #{warningNum,jdbcType=INTEGER}, #{errorNum,jdbcType=INTEGER}, 
+      #{ntfContents,jdbcType=VARCHAR}, #{ntfType,jdbcType=TINYINT}, #{platform,jdbcType=VARCHAR}, 
+      #{tag,jdbcType=VARCHAR}, #{jobDesc,jdbcType=VARCHAR}, #{enableIncrbk,jdbcType=BIT}, 
+      #{enableDiffbk,jdbcType=BIT}, #{enableRetry,jdbcType=BIT}, #{lastRetryTime,jdbcType=TIMESTAMP}, 
+      #{enableBackupWindow,jdbcType=BIT}, #{enableHealthCheck,jdbcType=BIT}, #{snmpNotification,jdbcType=LONGVARCHAR}, 
+      #{emails,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.arkcloud.pojo.BackupJobWithBLOBs" >
+    insert into backup_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="startedAt != null" >
+        started_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="finishedAt != null" >
+        finished_at,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="srcId != null" >
+        src_id,
+      </if>
+      <if test="primaryDestId != null" >
+        primary_dest_id,
+      </if>
+      <if test="secondaryDestId != null" >
+        secondary_dest_id,
+      </if>
+      <if test="policyId != null" >
+        policy_id,
+      </if>
+      <if test="objectsNum != null" >
+        objects_num,
+      </if>
+      <if test="lastRuntime != null" >
+        last_runtime,
+      </if>
+      <if test="nextRuntime != null" >
+        next_runtime,
+      </if>
+      <if test="incrLastRuntime != null" >
+        incr_last_runtime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="excludeSwapfiles != null" >
+        exclude_swapfiles,
+      </if>
+      <if test="enableVmwaretools != null" >
+        enable_vmwaretools,
+      </if>
+      <if test="enabledCbt != null" >
+        enabled_cbt,
+      </if>
+      <if test="enableDedup != null" >
+        enable_dedup,
+      </if>
+      <if test="enableAppAwareness != null" >
+        enable_app_awareness,
+      </if>
+      <if test="enableEncryption != null" >
+        enable_encryption,
+      </if>
+      <if test="encryptionPwd != null" >
+        encryption_pwd,
+      </if>
+      <if test="compressLevel != null" >
+        compress_level,
+      </if>
+      <if test="successNum != null" >
+        success_num,
+      </if>
+      <if test="warningNum != null" >
+        warning_num,
+      </if>
+      <if test="errorNum != null" >
+        error_num,
+      </if>
+      <if test="ntfContents != null" >
+        ntf_contents,
+      </if>
+      <if test="ntfType != null" >
+        ntf_type,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="tag != null" >
+        tag,
+      </if>
+      <if test="jobDesc != null" >
+        job_desc,
+      </if>
+      <if test="enableIncrbk != null" >
+        enable_incrbk,
+      </if>
+      <if test="enableDiffbk != null" >
+        enable_diffbk,
+      </if>
+      <if test="enableRetry != null" >
+        enable_retry,
+      </if>
+      <if test="lastRetryTime != null" >
+        last_retry_time,
+      </if>
+      <if test="enableBackupWindow != null" >
+        enable_backup_window,
+      </if>
+      <if test="enableHealthCheck != null" >
+        enable_health_check,
+      </if>
+      <if test="snmpNotification != null" >
+        snmp_notification,
+      </if>
+      <if test="emails != null" >
+        emails,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startedAt != null" >
+        #{startedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedAt != null" >
+        #{finishedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="srcId != null" >
+        #{srcId,jdbcType=INTEGER},
+      </if>
+      <if test="primaryDestId != null" >
+        #{primaryDestId,jdbcType=INTEGER},
+      </if>
+      <if test="secondaryDestId != null" >
+        #{secondaryDestId,jdbcType=INTEGER},
+      </if>
+      <if test="policyId != null" >
+        #{policyId,jdbcType=INTEGER},
+      </if>
+      <if test="objectsNum != null" >
+        #{objectsNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastRuntime != null" >
+        #{lastRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextRuntime != null" >
+        #{nextRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="incrLastRuntime != null" >
+        #{incrLastRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="excludeSwapfiles != null" >
+        #{excludeSwapfiles,jdbcType=BIT},
+      </if>
+      <if test="enableVmwaretools != null" >
+        #{enableVmwaretools,jdbcType=BIT},
+      </if>
+      <if test="enabledCbt != null" >
+        #{enabledCbt,jdbcType=BIT},
+      </if>
+      <if test="enableDedup != null" >
+        #{enableDedup,jdbcType=BIT},
+      </if>
+      <if test="enableAppAwareness != null" >
+        #{enableAppAwareness,jdbcType=BIT},
+      </if>
+      <if test="enableEncryption != null" >
+        #{enableEncryption,jdbcType=BIT},
+      </if>
+      <if test="encryptionPwd != null" >
+        #{encryptionPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="compressLevel != null" >
+        #{compressLevel,jdbcType=TINYINT},
+      </if>
+      <if test="successNum != null" >
+        #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="warningNum != null" >
+        #{warningNum,jdbcType=INTEGER},
+      </if>
+      <if test="errorNum != null" >
+        #{errorNum,jdbcType=INTEGER},
+      </if>
+      <if test="ntfContents != null" >
+        #{ntfContents,jdbcType=VARCHAR},
+      </if>
+      <if test="ntfType != null" >
+        #{ntfType,jdbcType=TINYINT},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null" >
+        #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="enableIncrbk != null" >
+        #{enableIncrbk,jdbcType=BIT},
+      </if>
+      <if test="enableDiffbk != null" >
+        #{enableDiffbk,jdbcType=BIT},
+      </if>
+      <if test="enableRetry != null" >
+        #{enableRetry,jdbcType=BIT},
+      </if>
+      <if test="lastRetryTime != null" >
+        #{lastRetryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableBackupWindow != null" >
+        #{enableBackupWindow,jdbcType=BIT},
+      </if>
+      <if test="enableHealthCheck != null" >
+        #{enableHealthCheck,jdbcType=BIT},
+      </if>
+      <if test="snmpNotification != null" >
+        #{snmpNotification,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="emails != null" >
+        #{emails,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.arkcloud.pojo.BackupJobWithBLOBs" >
+    update backup_job
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startedAt != null" >
+        started_at = #{startedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedAt != null" >
+        finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="srcId != null" >
+        src_id = #{srcId,jdbcType=INTEGER},
+      </if>
+      <if test="primaryDestId != null" >
+        primary_dest_id = #{primaryDestId,jdbcType=INTEGER},
+      </if>
+      <if test="secondaryDestId != null" >
+        secondary_dest_id = #{secondaryDestId,jdbcType=INTEGER},
+      </if>
+      <if test="policyId != null" >
+        policy_id = #{policyId,jdbcType=INTEGER},
+      </if>
+      <if test="objectsNum != null" >
+        objects_num = #{objectsNum,jdbcType=INTEGER},
+      </if>
+      <if test="lastRuntime != null" >
+        last_runtime = #{lastRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="nextRuntime != null" >
+        next_runtime = #{nextRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="incrLastRuntime != null" >
+        incr_last_runtime = #{incrLastRuntime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="excludeSwapfiles != null" >
+        exclude_swapfiles = #{excludeSwapfiles,jdbcType=BIT},
+      </if>
+      <if test="enableVmwaretools != null" >
+        enable_vmwaretools = #{enableVmwaretools,jdbcType=BIT},
+      </if>
+      <if test="enabledCbt != null" >
+        enabled_cbt = #{enabledCbt,jdbcType=BIT},
+      </if>
+      <if test="enableDedup != null" >
+        enable_dedup = #{enableDedup,jdbcType=BIT},
+      </if>
+      <if test="enableAppAwareness != null" >
+        enable_app_awareness = #{enableAppAwareness,jdbcType=BIT},
+      </if>
+      <if test="enableEncryption != null" >
+        enable_encryption = #{enableEncryption,jdbcType=BIT},
+      </if>
+      <if test="encryptionPwd != null" >
+        encryption_pwd = #{encryptionPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="compressLevel != null" >
+        compress_level = #{compressLevel,jdbcType=TINYINT},
+      </if>
+      <if test="successNum != null" >
+        success_num = #{successNum,jdbcType=INTEGER},
+      </if>
+      <if test="warningNum != null" >
+        warning_num = #{warningNum,jdbcType=INTEGER},
+      </if>
+      <if test="errorNum != null" >
+        error_num = #{errorNum,jdbcType=INTEGER},
+      </if>
+      <if test="ntfContents != null" >
+        ntf_contents = #{ntfContents,jdbcType=VARCHAR},
+      </if>
+      <if test="ntfType != null" >
+        ntf_type = #{ntfType,jdbcType=TINYINT},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=VARCHAR},
+      </if>
+      <if test="tag != null" >
+        tag = #{tag,jdbcType=VARCHAR},
+      </if>
+      <if test="jobDesc != null" >
+        job_desc = #{jobDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="enableIncrbk != null" >
+        enable_incrbk = #{enableIncrbk,jdbcType=BIT},
+      </if>
+      <if test="enableDiffbk != null" >
+        enable_diffbk = #{enableDiffbk,jdbcType=BIT},
+      </if>
+      <if test="enableRetry != null" >
+        enable_retry = #{enableRetry,jdbcType=BIT},
+      </if>
+      <if test="lastRetryTime != null" >
+        last_retry_time = #{lastRetryTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableBackupWindow != null" >
+        enable_backup_window = #{enableBackupWindow,jdbcType=BIT},
+      </if>
+      <if test="enableHealthCheck != null" >
+        enable_health_check = #{enableHealthCheck,jdbcType=BIT},
+      </if>
+      <if test="snmpNotification != null" >
+        snmp_notification = #{snmpNotification,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="emails != null" >
+        emails = #{emails,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.arkcloud.pojo.BackupJobWithBLOBs" >
+    update backup_job
+    set name = #{name,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      started_at = #{startedAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      src_id = #{srcId,jdbcType=INTEGER},
+      primary_dest_id = #{primaryDestId,jdbcType=INTEGER},
+      secondary_dest_id = #{secondaryDestId,jdbcType=INTEGER},
+      policy_id = #{policyId,jdbcType=INTEGER},
+      objects_num = #{objectsNum,jdbcType=INTEGER},
+      last_runtime = #{lastRuntime,jdbcType=TIMESTAMP},
+      next_runtime = #{nextRuntime,jdbcType=TIMESTAMP},
+      incr_last_runtime = #{incrLastRuntime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      exclude_swapfiles = #{excludeSwapfiles,jdbcType=BIT},
+      enable_vmwaretools = #{enableVmwaretools,jdbcType=BIT},
+      enabled_cbt = #{enabledCbt,jdbcType=BIT},
+      enable_dedup = #{enableDedup,jdbcType=BIT},
+      enable_app_awareness = #{enableAppAwareness,jdbcType=BIT},
+      enable_encryption = #{enableEncryption,jdbcType=BIT},
+      encryption_pwd = #{encryptionPwd,jdbcType=VARCHAR},
+      compress_level = #{compressLevel,jdbcType=TINYINT},
+      success_num = #{successNum,jdbcType=INTEGER},
+      warning_num = #{warningNum,jdbcType=INTEGER},
+      error_num = #{errorNum,jdbcType=INTEGER},
+      ntf_contents = #{ntfContents,jdbcType=VARCHAR},
+      ntf_type = #{ntfType,jdbcType=TINYINT},
+      platform = #{platform,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      job_desc = #{jobDesc,jdbcType=VARCHAR},
+      enable_incrbk = #{enableIncrbk,jdbcType=BIT},
+      enable_diffbk = #{enableDiffbk,jdbcType=BIT},
+      enable_retry = #{enableRetry,jdbcType=BIT},
+      last_retry_time = #{lastRetryTime,jdbcType=TIMESTAMP},
+      enable_backup_window = #{enableBackupWindow,jdbcType=BIT},
+      enable_health_check = #{enableHealthCheck,jdbcType=BIT},
+      snmp_notification = #{snmpNotification,jdbcType=LONGVARCHAR},
+      emails = #{emails,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.arkcloud.pojo.BackupJob" >
+    update backup_job
+    set name = #{name,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      started_at = #{startedAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=TINYINT},
+      src_id = #{srcId,jdbcType=INTEGER},
+      primary_dest_id = #{primaryDestId,jdbcType=INTEGER},
+      secondary_dest_id = #{secondaryDestId,jdbcType=INTEGER},
+      policy_id = #{policyId,jdbcType=INTEGER},
+      objects_num = #{objectsNum,jdbcType=INTEGER},
+      last_runtime = #{lastRuntime,jdbcType=TIMESTAMP},
+      next_runtime = #{nextRuntime,jdbcType=TIMESTAMP},
+      incr_last_runtime = #{incrLastRuntime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      exclude_swapfiles = #{excludeSwapfiles,jdbcType=BIT},
+      enable_vmwaretools = #{enableVmwaretools,jdbcType=BIT},
+      enabled_cbt = #{enabledCbt,jdbcType=BIT},
+      enable_dedup = #{enableDedup,jdbcType=BIT},
+      enable_app_awareness = #{enableAppAwareness,jdbcType=BIT},
+      enable_encryption = #{enableEncryption,jdbcType=BIT},
+      encryption_pwd = #{encryptionPwd,jdbcType=VARCHAR},
+      compress_level = #{compressLevel,jdbcType=TINYINT},
+      success_num = #{successNum,jdbcType=INTEGER},
+      warning_num = #{warningNum,jdbcType=INTEGER},
+      error_num = #{errorNum,jdbcType=INTEGER},
+      ntf_contents = #{ntfContents,jdbcType=VARCHAR},
+      ntf_type = #{ntfType,jdbcType=TINYINT},
+      platform = #{platform,jdbcType=VARCHAR},
+      tag = #{tag,jdbcType=VARCHAR},
+      job_desc = #{jobDesc,jdbcType=VARCHAR},
+      enable_incrbk = #{enableIncrbk,jdbcType=BIT},
+      enable_diffbk = #{enableDiffbk,jdbcType=BIT},
+      enable_retry = #{enableRetry,jdbcType=BIT},
+      last_retry_time = #{lastRetryTime,jdbcType=TIMESTAMP},
+      enable_backup_window = #{enableBackupWindow,jdbcType=BIT},
+      enable_health_check = #{enableHealthCheck,jdbcType=BIT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

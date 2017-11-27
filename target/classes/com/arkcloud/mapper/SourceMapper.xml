@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.arkcloud.dao.SourceMapper" >
+  <resultMap id="BaseResultMap" type="com.arkcloud.pojo.Source" >
+    <result column="id" property="id" jdbcType="INTEGER" />
+    <result column="src_addr" property="srcAddr" jdbcType="VARCHAR" />
+    <result column="src_port" property="srcPort" jdbcType="INTEGER" />
+    <result column="src_user" property="srcUser" jdbcType="VARCHAR" />
+    <result column="src_psd" property="srcPsd" jdbcType="VARCHAR" />
+    <result column="src_description" property="srcDescription" jdbcType="VARCHAR" />
+    <result column="src_owner" property="srcOwner" jdbcType="INTEGER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.arkcloud.pojo.Source" >
+    insert into srcs (id, src_addr, src_port, 
+      src_user, src_psd, src_description, 
+      src_owner)
+    values (#{id,jdbcType=INTEGER}, #{srcAddr,jdbcType=VARCHAR}, #{srcPort,jdbcType=INTEGER}, 
+      #{srcUser,jdbcType=VARCHAR}, #{srcPsd,jdbcType=VARCHAR}, #{srcDescription,jdbcType=VARCHAR}, 
+      #{srcOwner,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.arkcloud.pojo.Source" >
+    insert into srcs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="srcAddr != null" >
+        src_addr,
+      </if>
+      <if test="srcPort != null" >
+        src_port,
+      </if>
+      <if test="srcUser != null" >
+        src_user,
+      </if>
+      <if test="srcPsd != null" >
+        src_psd,
+      </if>
+      <if test="srcDescription != null" >
+        src_description,
+      </if>
+      <if test="srcOwner != null" >
+        src_owner,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="srcAddr != null" >
+        #{srcAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="srcPort != null" >
+        #{srcPort,jdbcType=INTEGER},
+      </if>
+      <if test="srcUser != null" >
+        #{srcUser,jdbcType=VARCHAR},
+      </if>
+      <if test="srcPsd != null" >
+        #{srcPsd,jdbcType=VARCHAR},
+      </if>
+      <if test="srcDescription != null" >
+        #{srcDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="srcOwner != null" >
+        #{srcOwner,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

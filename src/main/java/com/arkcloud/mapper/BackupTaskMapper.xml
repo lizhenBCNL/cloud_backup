@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.arkcloud.dao.BackupTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.arkcloud.pojo.BackupTask" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="job_id" property="jobId" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="finished_at" property="finishedAt" jdbcType="TIMESTAMP" />
+    <result column="src_info_id" property="srcInfoId" jdbcType="INTEGER" />
+    <result column="dest_info_id" property="destInfoId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.arkcloud.pojo.BackupTask" extends="BaseResultMap" >
+    <result column="desc" property="desc" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, type, job_id, created_at, updated_at, finished_at, src_info_id, dest_info_id, 
+    status
+  </sql>
+  <sql id="Blob_Column_List" >
+    desc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from backup_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from backup_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.arkcloud.pojo.BackupTask" >
+    insert into backup_task (id, name, type, 
+      job_id, created_at, updated_at, 
+      finished_at, src_info_id, dest_info_id, 
+      status, desc)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{jobId,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{finishedAt,jdbcType=TIMESTAMP}, #{srcInfoId,jdbcType=INTEGER}, #{destInfoId,jdbcType=INTEGER}, 
+      #{status,jdbcType=VARCHAR}, #{desc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.arkcloud.pojo.BackupTask" >
+    insert into backup_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="jobId != null" >
+        job_id,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="finishedAt != null" >
+        finished_at,
+      </if>
+      <if test="srcInfoId != null" >
+        src_info_id,
+      </if>
+      <if test="destInfoId != null" >
+        dest_info_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="desc != null" >
+        desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="jobId != null" >
+        #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedAt != null" >
+        #{finishedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srcInfoId != null" >
+        #{srcInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="destInfoId != null" >
+        #{destInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.arkcloud.pojo.BackupTask" >
+    update backup_task
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="jobId != null" >
+        job_id = #{jobId,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="finishedAt != null" >
+        finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srcInfoId != null" >
+        src_info_id = #{srcInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="destInfoId != null" >
+        dest_info_id = #{destInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null" >
+        desc = #{desc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.arkcloud.pojo.BackupTask" >
+    update backup_task
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      job_id = #{jobId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      src_info_id = #{srcInfoId,jdbcType=INTEGER},
+      dest_info_id = #{destInfoId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR},
+      desc = #{desc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.arkcloud.pojo.BackupTask" >
+    update backup_task
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=TINYINT},
+      job_id = #{jobId,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      finished_at = #{finishedAt,jdbcType=TIMESTAMP},
+      src_info_id = #{srcInfoId,jdbcType=INTEGER},
+      dest_info_id = #{destInfoId,jdbcType=INTEGER},
+      status = #{status,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
